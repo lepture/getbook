@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="3.0" xmlns="http://www.idpf.org/2007/opf" unique-identifier="uid">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:identifier id="uid">{{ book.uid }}</dc:identifier>
+    <dc:language>{{ book.lang }}</dc:language>
+    <dc:title>{{ book.title }}</dc:title>
+    <dc:creator opf:role="aut">{{ book.author }}</dc:creator>
+    <dc:date>{{ book.pubdate|date('%Y-%m-%dT%H:%M:%SZ') }}</dc:date>
+    <dc:subject>Book</dc:subject>
+    <dc:description>A book created by {{ book.author }} via doocer.</dc:description>
+    <dc:publisher>doocer.com</dc:publisher>
+  </metadata>
+  <manifest>
+    <item id="cover-image" properties="cover-image" href="cover.jpg" media-type="image/jpeg"/>
+    <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
+    <item id="toc" properties="nav" href="toc.xhtml" media-type="application/xhtml+xml"/>
+    <item id="preface" href="preface.xhtml" media-type="application/xhtml+xml"/>
+    <item id="style" href="stylesheet.css" media-type="text/css"/>
+    {% for item in book.chapters %}
+      <item id="{{ item.uid }}" href="{{ item.uid }}.xhtml" media-type="application/xhtml+xml"/>
+    {% endfor %}
+    {% for item in book.sections %}
+      <item id="{{ item.uid }}" href="{{ item.uid }}.xhtml" media-type="application/xhtml+xml"/>
+    {% endfor %}
+    {% for item in book.images %}
+      <item id="{{ item.uid }}" href="{{ item.href }}" media-type="{{ item.mimetype }}"/>
+    {% endfor %}
+  </manifest>
+  <spine>
+    <itemref idref="cover"/>
+    <itemref idref="toc"/>
+    <itemref idref="preface"/>
+    {% for item in book.chapters %}
+      <itemref idref="{{ item.uid }}"/>
+    {% endfor %}
+  </spine>
+  <guide>
+    <reference type="toc" title="Table of Contents" href="toc.xhtml"/>
+    <reference type="start" title="Preface" href="preface.xhtml"/>
+  </guide>
+</package>

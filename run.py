@@ -1,11 +1,11 @@
 import sys
 import time
-from getbook.generator import Generator
+from getbook.gen import BookGen
 
 
 def run(url):
     begin = time.time()
-    g = Generator()
+    g = BookGen()
     d = g.parse(url)
     end = time.time()
 

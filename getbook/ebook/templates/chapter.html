@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ chapter.lang }}" lang="{{ chapter.lang }}">
+<head>
+  <meta charset="UTF-8"/>
+  <title>{{ chapter.title }}</title>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+</head>
+<body>
+<div class="chapter">
+  {% if meta %}
+    <div class="chapter-meta">
+      {% if chapter.source %}
+        <a href="{{ chapter.url }}">{{ chapter.source }}</a>
+      {% endif %}
+      {% if chapter.author %}
+        <span>{{ chapter.author }}</span>
+      {% endif %}
+      {% if chapter.pubdate %}
+        <span>{{ chapter.pubdate|date }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+  <h1 class="chapter-title">{{ chapter.title }}</h1>
+  <div class="chapter-content">{{ chapter.content|safe }}</div>
+</div>
+</body>
+</html>

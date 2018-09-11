@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ book.lang }}" lang="{{ book.lang }}">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+</head>
+<body>
+<div class="cover">
+  <div class="cover-head">Published By Doocer</div>
+  <h1 class="cover-title">{{ book.title }}</h1>
+  <div class="cover-meta">
+    <div class="cover-author">{{ book.author }}</div>
+    <div class="cover-pubdate">{{ book.pubdate|date }}</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"
+      xml:lang="{{ book.lang }}" lang="{{ book.lang }}">
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+</head>
+<body>
+<div class="toc">
+  <h1>Contents</h1>
+  <nav epub:type="toc">
+    <ol>
+      {% for sec in book.sections %}
+        <li>
+          <a href="{{ sec.uid }}.xhtml">{{ sec.title }}</a>
+          <ol>
+            {% for item in sec.chapters %}
+              <li><a href="{{ item.uid }}.xhtml">{{ item.title }}</a></li>
+            {% endfor %}
+          </ol>
+        </li>
+      {% endfor %}
+      {% for item in book.chapters %}
+        <li><a href="{{ item.uid }}.xhtml">{{ item.title }}</a></li>
+      {% endfor %}
+    </ol>
+  </nav>
+</div>
+</body>
+</html>

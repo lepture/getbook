@@ -17,15 +17,19 @@ class Chapter(_Chapter):
 
 
 class Section(object):
-    def __init__(self, title):
+    def __init__(self, uid, title, subtitle=None):
+        self.uid = uid
         self.title = title
+        self.subtitle = subtitle
         self.chapters = []
 
 
 class Book(object):
-    def __init__(self, title, lang=None, author=None):
+    def __init__(self, uid, title, lang=None, author=None):
+        self.uid = uid
         self.title = title
         self.lang = lang
-        self.author = author
+        self.author = author or 'Doocer'
         self.sections = []
         self.chapters = []
+        self.images = []

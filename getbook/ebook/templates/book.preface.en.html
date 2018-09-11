@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ book.lang }}" lang="{{ book.lang }}">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+</head>
+<body>
+<div class="preface">
+  <h1 class="preface-title">Preface</h1>
+  <div class="preface-content">
+    <p><em>{{ book.title }}</em> is created by {{ book.author }}.</p>
+    <p>This book contains {{ book.chapter_count }} chapters. Take some time, enjoy the book.</p>
+    <p>Many thanks to our kind member <strong>{{ book.author }}</strong>.</p>
+    <hr/>
+    <div class="preface-bottom">
+      <em>doocer.com is a service that you can create ebooks from a collection of web links.</em>
+    </div>
+  </div>
+</div>
+</body>
+</html>
