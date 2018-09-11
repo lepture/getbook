@@ -51,6 +51,6 @@ class Readable(object):
             return chapter
 
         content = expand_gist(chapter.content, self.get_parser())
-        data = dict(chapter._asdict())
+        data = dict(chapter.to_dict())
         data['content'] = content
         return Chapter(**data)

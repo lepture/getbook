@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 
-Chapter = namedtuple(
+_Chapter = namedtuple(
     'Chapter',
     [
         'url', 'lang', 'image', 'publisher',
@@ -9,6 +9,11 @@ Chapter = namedtuple(
         'content', 'pubdate', 'attachments',
     ]
 )
+
+
+class Chapter(_Chapter):
+    def to_dict(self):
+        return self._asdict()
 
 
 class Section(object):

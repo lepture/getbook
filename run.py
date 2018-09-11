@@ -1,21 +1,21 @@
 import sys
 import time
-from getbook.parser import Readable
+from getbook.generator import Generator
 
 
 def run(url):
     begin = time.time()
-    parser = Readable(url)
-    d = parser.parse(True)
+    g = Generator()
+    d = g.parse(url)
     end = time.time()
 
-    print(d.title)
+    print(d['title'])
     print('------------')
-    print('%s %s %s %s' % (d.lang, d.publisher, d.author, d.pubdate))
+    print('%(lang)s %(publisher)s %(author)s %(pubdate)s' % d)
     print('------------')
-    print(d.attachments)
+    print(d['attachments'])
     print('------------')
-    print(d.content)
+    print(d['content'])
     print('------------')
     print(end - begin)
 
