@@ -1,0 +1,12 @@
+beautifulsoup4==4.6.3
+certifi==2018.8.24
+chardet==3.0.4
+idna==2.7
+Jinja2==2.10
+lxml==4.2.5
+MarkupSafe==1.0
+Pillow==5.2.0
+python-dateutil==2.7.3
+requests==2.19.1
+six==1.11.0
+urllib3==1.23
