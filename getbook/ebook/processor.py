@@ -124,17 +124,10 @@ def _is_valid_image(filepath):
 
 
 def create_book_cover(config, book, src, image_dir):
-    default_cover = config['EBOOK_DEFAULT_COVER']
-    if not src:
-        src = default_cover
-
     cover_file = get_or_download_image(src, image_dir)
     ext = cover_file.split('.')[-1]
     if ext not in ['jpg', 'jpeg', 'png']:
-        cover_file = None
-
-    if not cover_file:
-        cover_file = get_or_download_image(default_cover)
+        return None
 
     cover = Cover(config)
     cover.draw_background(cover_file)

@@ -49,7 +49,7 @@ class Book(object):
             pubdate = datetime.datetime.utcnow()
         self.pubdate = pubdate
 
-        self.cover = False
+        self.cover = None
         self.sections = []
         self.chapters = []
         self.images = set()

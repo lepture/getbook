@@ -80,16 +80,26 @@ class BookBuilder(object):
 
     def write_cover(self, book):
         if not self.config:
-            return
+            book.cover = None
+            return False
 
-        if self._cover:
-            src = self._cover['src']
-        else:
-            src = self._get_unsplash_cover()
         image_dir = os.path.join(self.cache_dir, 'img')
-        cover = create_book_cover(self.config, book, src, image_dir)
-        cover.save(os.path.join(self.book_dir, 'cover.jpg'))
-        book.cover = True
+
+        def _create_cover(src):
+            cover = create_book_cover(self.config, book, src, image_dir)
+            if cover:
+                cover.save(os.path.join(self.book_dir, 'cover.jpg'))
+                book.cover = src
+                return True
+            return False
+
+        if book.cover and _create_cover(book.cover):
+            return True
+
+        if self._cover and _create_cover(self._cover['src']):
+            return True
+
+        return _create_cover(self._get_unsplash_cover())
 
     def write_opf(self, book):
         self.write_template('book.opf.xml', {'book': book}, 'package.opf')
