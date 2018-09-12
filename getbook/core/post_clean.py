@@ -94,14 +94,7 @@ def normalize_html(node):
         html = str(node)
 
     html = CJK_NEWLINE.sub(r'\1\2', html)
-    html = MANY_BR.sub('<br/><br/>', html)
-
-    # transform br to paragraph
-    split_key = '<br/><br/>'
-    if split_key in html and '</p>' not in html:
-        bits = html.split(split_key)
-        html = '\n'.join(['<p>%s</p>' % s for s in bits])
-    return html.strip()
+    return transform_newlines(html)
 
 
 def clean_node(node):
@@ -212,6 +205,17 @@ def table_codeblock(node):
     code.name = 'pre'
     node.replace_with(code)
     return code
+
+
+def transform_newlines(html):
+    html = MANY_BR.sub('<br/><br/>', html)
+
+    # transform br to paragraph
+    split_key = '<br/><br/>'
+    if split_key in html and '</p>' not in html:
+        bits = html.split(split_key)
+        html = '\n'.join(['<p>%s</p>' % s for s in bits])
+    return html.strip()
 
 
 def _get_child_attchments(node, tag):

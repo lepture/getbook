@@ -1,8 +1,11 @@
 # coding: utf-8
 
+import logging
 from .core import Chapter, FallbackParser
 from .sites import get_parser_by_url, get_parser_by_html
 from .sites.github import expand_gist
+
+log = logging.getLogger(__name__)
 
 
 class Readable(object):
@@ -25,6 +28,8 @@ class Readable(object):
         if self.html:
             Parser = get_parser_by_html(self.html) or FallbackParser
             self._parser = Parser(self.url, self.html)
+
+            log.debug('Parser: {}'.format(self._parser.NAME))
             return self._parser
 
         p = FallbackParser(self.url)
@@ -38,6 +43,8 @@ class Readable(object):
             self._parser = Parser(self.url, self.html)
         else:
             self._parser = p
+
+        log.debug('Parser: {}'.format(self._parser.NAME))
         return self._parser
 
     def parse(self, expand=False):

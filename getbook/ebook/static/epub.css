@@ -1,0 +1,18 @@
+.chapter-content {
+  line-height: 1.62;
+}
+
+.chapter-content img {
+  max-width: 100%;
+}
+
+.chapter-content .tag {
+  background-color: #efefee;
+  color: rgba(0, 0, 0, 0.2);
+  font-family: Optima, sans-serif;
+  border-color: #efefee;
+}
+
+.cover-head, .cover-meta {
+  font-family: sans-serif;
+}

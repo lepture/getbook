@@ -1,34 +1,44 @@
 # coding: utf-8
 
+from urllib.parse import urlparse
+from collections import defaultdict
 from .github import GistParser, GithubIssueParser, GithubBlobParser
+from .kanunu import KanunuParser
 
 __all__ = ['get_parser_by_url', 'get_parser_by_html']
 
 
-url_preset = []
-html_preset = []
+URL_PRESET = []
+DOMAIN_URL_PRESET = defaultdict(list)
+HTML_PRESET = []
 
 
 def register(Parser):
-    pattern = getattr(Parser, 'URL_PATTERN', None)
-    if pattern:
-        url_preset.append((pattern.search, Parser))
+    if hasattr(Parser, 'ALLOWED_DOMAINS'):
+        for host in Parser.ALLOWED_DOMAINS:
+            DOMAIN_URL_PRESET[host].append((Parser.check_url, Parser))
+    else:
+        if hasattr(Parser, 'check_url'):
+            URL_PRESET.append((Parser.check_url, Parser))
 
-    if hasattr(Parser, 'match_html'):
-        html_preset.append((Parser.match_html, Parser))
+    if hasattr(Parser, 'check_html'):
+        HTML_PRESET.append((Parser.match_html, Parser))
 
 
 register(GistParser)
 register(GithubIssueParser)
 register(GithubBlobParser)
+register(KanunuParser)
 
 
 def get_parser_by_url(url):
-    return _get_parser(url, url_preset)
+    host = urlparse(url).hostname
+    preset = DOMAIN_URL_PRESET.get(host, URL_PRESET)
+    return _get_parser(url, preset)
 
 
 def get_parser_by_html(html):
-    return _get_parser(html, html_preset)
+    return _get_parser(html, HTML_PRESET)
 
 
 def _get_parser(param, preset):

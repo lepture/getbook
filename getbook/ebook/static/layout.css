@@ -1,0 +1,78 @@
+.tag {
+  display: inline-block;
+  width: 100%;
+  padding: 40px;
+  font-weight: 600;
+  font-size: 1.6em;
+  box-sizing: border-box;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+.chapter-meta {
+  color: #555553;
+  font-size: 0.86em;
+}
+
+.chapter-meta a + span,
+.chapter-meta span + span {
+  margin-left: 0.86em;
+}
+
+.chapter-meta a {
+  color: #555553;
+  text-decoration: none;
+}
+
+.chapter-title {
+  margin: 1em 0 1.42em;
+  line-height: 1.12;
+  font-size: 1.82em;
+  color: #111112;
+  text-align: center;
+}
+
+.toc, .cover, .preface {
+  padding: 20px;
+}
+
+.toc h1 {
+  text-align: center;
+  margin-bottom: 2.1em;
+}
+
+.cover {
+  text-align: center;
+}
+
+.cover-head,
+.cover-meta {
+  color: #555553;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+
+.cover-title {
+  font-size: 2em;
+  margin-top: 120px;
+  height: 260px;
+  text-align: center;
+}
+
+.preface-title {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.preface-content {
+  padding-left: 2em;
+  padding-right: 2em;
+  margin: 0 auto;
+}
+
+.preface-bottom {
+  font-size: 0.92em;
+}

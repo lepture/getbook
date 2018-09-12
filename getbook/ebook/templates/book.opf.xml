@@ -11,16 +11,21 @@
     <dc:publisher>doocer.com</dc:publisher>
   </metadata>
   <manifest>
+    {% if book.cover %}
     <item id="cover-image" properties="cover-image" href="cover.jpg" media-type="image/jpeg"/>
+    {% endif %}
     <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
     <item id="toc" properties="nav" href="toc.xhtml" media-type="application/xhtml+xml"/>
     <item id="preface" href="preface.xhtml" media-type="application/xhtml+xml"/>
     <item id="style" href="stylesheet.css" media-type="text/css"/>
     {% for item in book.chapters %}
-      <item id="{{ item.uid }}" href="{{ item.uid }}.xhtml" media-type="application/xhtml+xml"/>
+    <item id="{{ item.uid }}" href="{{ item.uid }}.xhtml" media-type="application/xhtml+xml"/>
     {% endfor %}
     {% for item in book.sections %}
+    <item id="{{ item.uid }}" href="{{ item.uid }}.xhtml" media-type="application/xhtml+xml"/>
+      {% for item in item.chapters %}
       <item id="{{ item.uid }}" href="{{ item.uid }}.xhtml" media-type="application/xhtml+xml"/>
+      {% endfor %}
     {% endfor %}
     {% for item in book.images %}
       <item id="{{ item.uid }}" href="{{ item.href }}" media-type="{{ item.mimetype }}"/>
@@ -31,7 +36,13 @@
     <itemref idref="toc"/>
     <itemref idref="preface"/>
     {% for item in book.chapters %}
+    <itemref idref="{{ item.uid }}"/>
+    {% endfor %}
+    {% for item in book.sections %}
+    <itemref idref="{{ item.uid }}"/>
+      {% for item in item.chapters %}
       <itemref idref="{{ item.uid }}"/>
+      {% endfor %}
     {% endfor %}
   </spine>
   <guide>

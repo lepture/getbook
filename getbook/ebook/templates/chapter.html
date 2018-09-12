@@ -7,10 +7,10 @@
 </head>
 <body>
 <div class="chapter">
-  {% if meta %}
+  {% if chapter.author and chapter.pubdate %}
     <div class="chapter-meta">
-      {% if chapter.source %}
-        <a href="{{ chapter.url }}">{{ chapter.source }}</a>
+      {% if chapter.publisher %}
+        <a href="{{ chapter.url }}">{{ chapter.publisher }}</a>
       {% endif %}
       {% if chapter.author %}
         <span>{{ chapter.author }}</span>

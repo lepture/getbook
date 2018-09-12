@@ -5,8 +5,8 @@ from getbook.gen import BookGen
 
 def run(url):
     begin = time.time()
-    g = BookGen()
-    d = g.parse(url)
+    g = BookGen(None)
+    d = g.parse(url, force=True)
     end = time.time()
 
     print(d['title'])

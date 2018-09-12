@@ -20,7 +20,12 @@ GIST_URL = re.compile(
 
 class GithubIssueParser(Parser):
     NAME = 'github-issue'
+    ALLOWED_DOMAINS = ['github.com']
     URL_PATTERN = re.compile(r'https://github\.com/.*?/(?:issues|pull)/\d+')
+
+    @classmethod
+    def check_url(cls, url):
+        return cls.URL_PATTERN.search(url)
 
     @classmethod
     def normalize_url(cls, url):
@@ -34,9 +39,6 @@ class GithubIssueParser(Parser):
         els = self.dom.select('.gh-header-meta a.author')
         if els:
             return els[0].get_text()
-
-    def parse_image(self):
-        return None
 
     def parse_publisher(self):
         return 'GitHub'
@@ -58,7 +60,12 @@ class GithubIssueParser(Parser):
 
 class GithubBlobParser(Parser):
     NAME = 'github-blob'
+    ALLOWED_DOMAINS = ['github.com']
     URL_PATTERN = re.compile(r'https://github\.com/.*?/blob/.*')
+
+    @classmethod
+    def check_url(cls, url):
+        return cls.URL_PATTERN.search(url)
 
     @classmethod
     def normalize_url(cls, url):
@@ -76,14 +83,8 @@ class GithubBlobParser(Parser):
         if el:
             return el.get_text()
 
-    def parse_image(self):
-        return None
-
     def parse_publisher(self):
         return 'GitHub'
-
-    def parse_pubdate(self):
-        return None
 
     def parse_title(self):
         content = getattr(self, '_content', None)
@@ -106,7 +107,12 @@ class GithubBlobParser(Parser):
 
 class GistParser(Parser):
     NAME = 'github-gist'
+    ALLOWED_DOMAINS = ['gist.github.com']
     URL_PATTERN = re.compile(r'gist\.github\.com/(?:(?:[^\/]+/.+)|\d+)')
+
+    @classmethod
+    def check_url(cls, url):
+        return cls.URL_PATTERN.search(url)
 
     @property
     def dom(self):
@@ -142,9 +148,6 @@ class GistParser(Parser):
 
     def parse_title(self):
         return self.content.get('description')
-
-    def parse_image(self):
-        return None
 
     def parse_content(self):
         html = parse_content_html(self.dom)

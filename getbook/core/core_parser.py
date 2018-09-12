@@ -12,7 +12,7 @@ from bs4.builder._lxml import LXMLTreeBuilder
 from .post_clean import parse_content_and_attachments
 from .parse_lang import parse_lang_by_text
 from .utils import normalize_url, get_canonical_link
-from .model import Chapter
+from .models import Chapter
 
 KILL_TAGS = [
     'button', 'input', 'select', 'textarea',
@@ -80,17 +80,17 @@ class Parser(object):
     def parse_title(self):
         raise NotImplementedError()
 
-    def parse_summary(self):
-        return None
-
     def parse_content(self):
         raise NotImplementedError()
 
+    def parse_summary(self):
+        return None
+
     def parse_author(self):
-        raise NotImplementedError()
+        return None
 
     def parse_pubdate(self):
-        raise NotImplementedError()
+        return None
 
     def parse_image(self):
         return None

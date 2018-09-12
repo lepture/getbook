@@ -1,3 +1,4 @@
+import datetime
 from collections import namedtuple
 
 
@@ -9,6 +10,16 @@ _Chapter = namedtuple(
         'content', 'pubdate', 'attachments',
     ]
 )
+
+_Image = namedtuple('Image', ['uid', 'filepath', 'href', 'mimetype'])
+
+
+class Image(_Image):
+    def __hash__(self):
+        return hash(self.uid)
+
+    def __eq__(self, other):
+        return self.uid == other.uid
 
 
 class Chapter(_Chapter):
@@ -25,11 +36,20 @@ class Section(object):
 
 
 class Book(object):
-    def __init__(self, uid, title, lang=None, author=None):
+    def __init__(self, uid, title, lang=None, author=None, pubdate=None):
         self.uid = uid
         self.title = title
         self.lang = lang
-        self.author = author or 'Doocer'
+
+        if author is None:
+            author = 'Doocer'
+        self.author = author
+
+        if pubdate is None:
+            pubdate = datetime.datetime.utcnow()
+        self.pubdate = pubdate
+
+        self.cover = False
         self.sections = []
         self.chapters = []
-        self.images = []
+        self.images = set()
