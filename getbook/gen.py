@@ -85,13 +85,13 @@ class BookGen(object):
             data = self.parse(c['url'], force)
             index += 1
             if data:
-                chapter_id = 'c-{}'.format(index)
-                c['uid'] = chapter_id
+                uid = 'c-{}'.format(index)
+                c['uid'] = uid
                 c['status'] = 'success'
                 if 'title' not in c:
                     c['title'] = data['title']
 
-                data['uid'] = chapter_id
+                data['uid'] = uid
                 if builder:
                     builder.write_chapter(data)
             else:

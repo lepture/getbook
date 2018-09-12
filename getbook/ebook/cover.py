@@ -41,7 +41,7 @@ class Cover(object):
 
     def draw_top_text(self, suffix):
         text = self.COPYRIGHT_TEXT + ' / ' + suffix
-        font_file = self.config.get('EBOOK_ENG_REGULAR_FONT')
+        font_file = self.config['EBOOK_ENG_REGULAR_FONT']
         font = ImageFont.truetype(font_file, 20)
         self.draw.text((32, 20), text, WHITE, font)
 
@@ -146,10 +146,10 @@ class Cover(object):
     def _get_regular_font(self, text, base_width):
         font_size = int(base_width / len(text))
         if ENGLISH_WORDS.search(text):
-            font_file = self.config.get('EBOOK_ENG_REGULAR_FONT')
+            font_file = self.config['EBOOK_ENG_REGULAR_FONT']
             font_size = int(font_size * 1.8)
         else:
-            font_file = self.config.get('EBOOK_CJK_REGULAR_FONT')
+            font_file = self.config['EBOOK_CJK_REGULAR_FONT']
         return ImageFont.truetype(font_file, font_size)
 
     def _draw_top_bottom_text(self, text):
@@ -168,6 +168,6 @@ class Cover(object):
         y = int(self.HEIGHT * 0.8)
         rect = [x, y, x + 108, y + 10]
         self.draw.rectangle(rect, fill=WHITE)
-        font = self._get_regular_font(text, 192)
+        font = self._get_regular_font(text, 140)
         self.draw.text((x, y + 32), text, WHITE, font)
         return True

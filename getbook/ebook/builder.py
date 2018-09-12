@@ -3,6 +3,7 @@ import re
 import shutil
 import zipfile
 import logging
+import requests
 
 from collections import Counter
 from subprocess import Popen, PIPE
@@ -28,7 +29,9 @@ class BookBuilder(object):
         self.kindlegen = kindlegen
         self.cache_dir = cache_dir
         self.book_dir = os.path.join(cache_dir, 'book', book.uid)
+
         self._lang_counter = Counter()
+        self._cover = None
 
         if not os.path.isdir(self.book_dir):
             os.makedirs(self.book_dir)
@@ -50,9 +53,7 @@ class BookBuilder(object):
             {'chapter': chapter},
             '{}.xhtml'.format(chapter['uid'])
         )
-        lang = chapter.get('lang')
-        if lang != 'en':
-            self._lang_counter[lang] += 1
+        self._process_chapter(chapter)
 
     def write_section(self, section):
         self.write_template(
@@ -78,9 +79,17 @@ class BookBuilder(object):
         self._write(style, 'stylesheet.css')
 
     def write_cover(self, book):
-        # TODO
-        cover = create_book_cover()
-        cover.save()
+        if not self.config:
+            return
+
+        if self._cover:
+            src = self._cover['src']
+        else:
+            src = self._get_unsplash_cover()
+        image_dir = os.path.join(self.cache_dir, 'img')
+        cover = create_book_cover(self.config, book, src, image_dir)
+        cover.save(os.path.join(self.book_dir, 'cover.jpg'))
+        book.cover = True
 
     def write_opf(self, book):
         self.write_template('book.opf.xml', {'book': book}, 'package.opf')
@@ -112,7 +121,7 @@ class BookBuilder(object):
 
     def build(self, output, epub=True, mobi=True):
         book = self._prepare_book()
-        # self.write_cover(book)
+        self.write_cover(book)
 
         for sec in book.sections:
             self.write_section(sec)
@@ -132,7 +141,7 @@ class BookBuilder(object):
 
         if mobi and self.kindlegen:
             dest = os.path.join(output, book.uid + '.mobi')
-            self.write_stylesheet('reset', 'layout', 'highlight', 'mobi')
+            self.write_stylesheet('reset', 'layout', 'mobi')
             log.info('MOBI: {}'.format(dest))
             self.create_mobi(dest)
         # self.cleanup()
@@ -146,6 +155,30 @@ class BookBuilder(object):
         book = self.book
         book.lang = lang
         return book
+
+    def _process_chapter(self, chapter):
+        lang = chapter.get('lang')
+        if lang != 'en':
+            self._lang_counter[lang] += 1
+
+        if self._cover:
+            w = self._cover['width']
+            h = self._cover['height']
+            if w >= 1000 and h >= 800:
+                return
+
+        image = chapter.get('image')
+        if image:
+            self._cover = image
+
+    def _get_unsplash_cover(self):
+        client_id = self.config.get('UNSPLASH_CLIENT_ID')
+        if not client_id:
+            return None
+        url = 'https://api.unsplash.com/photos/random'
+        resp = requests.get(url, params={'client_id': client_id})
+        data = resp.json()
+        return data['urls']['regular']
 
     def _write(self, content, dest):
         """Write given content to the destination."""
