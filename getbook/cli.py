@@ -1,6 +1,7 @@
 import os
 import logging
 import json
+from . import __version__ as version
 from .core import Book, Section
 from .gen import BookGen
 
@@ -65,12 +66,18 @@ def parse_book_from_json(json_file):
 def main():
     import argparse
     parser = argparse.ArgumentParser()
+    parser.add_argument('--version', help='print getbook version',
+                        action='store_true')
     parser.add_argument('-v', '--verbose', help='print debug log',
                         action='store_true')
     parser.add_argument('-f', '--file', help='create book via JSON file')
     parser.add_argument('-u', '--url', help='create book via URL')
     parser.add_argument('-c', '--cover', help='add book cover URL')
     args = parser.parse_args()
+
+    if args.version:
+        print('getbook v{}'.format(version))
+        return
 
     config_logging(args.verbose)
     config = load_config()
