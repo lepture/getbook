@@ -1,0 +1,3 @@
+recursive-include getbook/ebook/templates *.*
+recursive-include getbook/ebook/static *.*
+prune tests*
