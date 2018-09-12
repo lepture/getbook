@@ -188,7 +188,7 @@ class BookBuilder(object):
         url = 'https://api.unsplash.com/photos/random'
         resp = requests.get(url, params={'client_id': client_id})
         data = resp.json()
-        return data['urls']['regular']
+        return data['urls']['full']
 
     def _write(self, content, dest):
         """Write given content to the destination."""
