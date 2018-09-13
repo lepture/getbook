@@ -11,7 +11,12 @@ media_element_tags = ('video', 'audio', 'object', 'embed', 'iframe')
 source_element_tags = ('img', 'video', 'audio', 'object', 'embed', 'iframe')
 useless_tags = ('form', 'fieldset', 'font')
 
-img_lazy_srcs = ('data-src', 'data-actualsrc', 'data-original')
+img_lazy_srcs = (
+    'data-src',
+    'data-actualsrc',
+    'data-original',
+    'data-original-src',
+)
 positive_symbols = ('article', 'post', 'content', 'entry')
 
 # pre clean configurations
@@ -230,7 +235,6 @@ ignored_bottom_symbols = (
     'author-box',
     'article-related',
     'metadata',
-    'footnotes',
 )
 
 ignored_meta_symbols = (
