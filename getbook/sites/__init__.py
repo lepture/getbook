@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from collections import defaultdict
 from .github import GistParser, GithubIssueParser, GithubBlobParser
 from .kanunu import KanunuParser
+from .feed import FeedParser
 
 __all__ = ['get_parser_by_url', 'get_parser_by_html']
 
@@ -22,13 +23,14 @@ def register(Parser):
             URL_PRESET.append((Parser.check_url, Parser))
 
     if hasattr(Parser, 'check_html'):
-        HTML_PRESET.append((Parser.match_html, Parser))
+        HTML_PRESET.append((Parser.check_html, Parser))
 
 
 register(GistParser)
 register(GithubIssueParser)
 register(GithubBlobParser)
 register(KanunuParser)
+register(FeedParser)
 
 
 def get_parser_by_url(url):

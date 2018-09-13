@@ -2,6 +2,7 @@
 
 import re
 import time
+import hashlib
 import dateutil.parser
 from datetime import datetime
 from urllib.parse import urlparse
@@ -101,6 +102,12 @@ def identities(node):
         tokens.append(ident)
     tokens.extend(node.get('class', []))
     return [i.lower() for i in tokens if _is_valid_ident(i)]
+
+
+def sha1name(name):
+    if not isinstance(name, bytes):
+        name = name.encode('utf-8')
+    return hashlib.sha1(name).hexdigest()
 
 
 def _is_valid_ident(ident):

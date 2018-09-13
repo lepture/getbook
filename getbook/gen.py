@@ -1,9 +1,9 @@
 import os
 import json
-import hashlib
 import logging
 import datetime
 from .core import Book
+from .core.utils import sha1name
 from .parser import Readable
 from .ebook import BookBuilder
 from .ebook.processor import update_chapter_image
@@ -27,8 +27,7 @@ class BookGen(object):
                 os.makedirs(folder)
 
     def gen_cache_file(self, url):
-        url = url.encode('utf-8')
-        name = hashlib.sha1(url).hexdigest()
+        name = sha1name(url)
         return os.path.join(self.cache_dir, 'data', name + '.json')
 
     def parse(self, url, force=False):
@@ -66,8 +65,8 @@ class BookGen(object):
             chapter = parser.parse(True)
             if isinstance(chapter, Book):
                 return chapter
-        except:
-            log.warn('Error: {}'.format(url))
+        except Exception as e:
+            log.warn('Error: {!r}'.format(e))
             return None
 
         data = chapter.to_dict()

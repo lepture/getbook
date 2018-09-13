@@ -181,7 +181,7 @@ class FallbackParser(Parser):
         for rule in rules:
             for el in self.dom.select(rule):
                 href = el.get('href')
-                if self.urljoin(href) == self.url:
+                if href and self.urljoin(href) == self.url:
                     el.extract()
                     return el.get_text()
 

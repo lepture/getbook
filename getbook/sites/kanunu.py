@@ -54,7 +54,7 @@ class KanunuParser(Parser):
 
         for item in self._parse_book_chapters():
             if isinstance(item, Section):
-                book.sections.append(item)
+                book.add_section(item)
             else:
                 book.chapters.append(item)
         return book
@@ -86,19 +86,14 @@ class KanunuParser(Parser):
         )
         has_section = len(section_elements) > 1
 
-        section_index = 0
         section = None
 
         rule = 'table[bgcolor="#d4d0c8"] tr'
         for el in self.dom.select(rule):
             bgcolor = el.get('bgcolor')
             if bgcolor and bgcolor == '#ffffcc' and has_section:
-                section_index += 1
                 title = el.get_text()
-                section = Section(
-                    uid='s-{}'.format(section_index),
-                    title=title,
-                )
+                section = Section(title=title)
                 yield section
                 continue
 

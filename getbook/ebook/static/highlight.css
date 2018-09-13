@@ -1,331 +1,69 @@
-.c,
-.pl-c {
-  color: #969896;
-}
-
-.c1,
-.s .v,
-.pl-c1,
-.pl-s .pl-v {
-  color: #0086b3;
-}
-
-.e,
-.en,
-.nc,
-.pl-e,
-.pl-en {
-  color: #795da3;
-}
-
-.smi,
-.s .s1,
-.pl-smi,
-.pl-s .pl-s1 {
-  color: #333;
-}
-
-.ent,
-.pl-ent {
-  color: #63a35c;
-}
-
-.k,
-.kn,
-.kc,
-.kd,
-.kn,
-.kp,
-.kr,
-.pl-k {
-  color: #069;
-}
-
-.s,
-.pds,
-.s .pse .s1,
-.sr,
-.sr .cce,
-.sr .sre,
-.sr .sra,
-.pl-s,
-.pl-pds,
-.pl-s .pl-pse .pl-s1,
-.pl-sr,
-.pl-sr .pl-cce,
-.pl-sr .pl-sre,
-.pl-sr .pl-sra {
-  color: #3aa;
-}
-
-.v,
-.swm,
-.pl-v,
-.pl-smw {
-  color: #ed6a43;
-}
-
-.bu,
-.pl-bu {
-  color: #b52a1d;
-}
-
-.ii,
-.pl-ii {
-  color: #f8f8f8;
-  background-color: #b52a1d;
-}
-
-.c2,
-.pl-c2 {
-  color: #f8f8f8;
-  background-color: #b52a1d;
-}
-
-.c2::before,
-.pl-c2::before {
-  content: "^M";
-}
-
-.sr .cce,
-.pl-sr .pl-cce {
-  font-weight: bold;
-  color: #63a35c;
-}
-
-.ml,
-.pl-ml {
-  color: #693a17;
-}
-
-.mh,
-.mh .en,
-.ms,
-.pl-mh,
-.pl-mh .pl-en,
-.pl-ms {
-  font-weight: bold;
-  color: #1d3e81;
-}
-
-.mq,
-.pl-mq {
-  color: #008080;
-}
-
-.mi,
-.pl-mi {
-  font-style: italic;
-  color: #333;
-}
-
-.mb,
-.pl-mb {
-  font-weight: bold;
-  color: #333;
-}
-
-.md,
-.pl-md {
-  color: #bd2c00;
-  background-color: #ffecec;
-}
-
-.mi1,
-.pl-mi1 {
-  color: #55a532;
-  background-color: #eaffea;
-}
-
-.mc,
-.pl-mc {
-  color: #ef9700;
-  background-color: #ffe3b4;
-}
-
-.mi2,
-.pl-mi2 {
-  color: #d8d8d8;
-  background-color: #808080;
-}
-
-.mdr,
-.pl-mdr {
-  font-weight: bold;
-  color: #795da3;
-}
-
-.mo,
-.pl-mo {
-  color: #f60;
-}
-
-.ba,
-.pl-ba {
-  color: #595e62;
-}
-
-.sg,
-.pl-sg {
-  color: #c0c0c0;
-}
-
-.corl,
-.pl-corl {
-  text-decoration: underline;
-  color: #183691;
-}
-
-.err {
-  color: #a00;
-  background-color: #faa;
-}
-.o {
-  color: #555;
-}
-.cm {
-  color: #09f;
-  font-style: italic;
-}
-.cp {
-  color: #099;
-}
-.cs {
-  color: #999;
-}
-.gd {
-  background-color: #fcc;
-  border: 1px solid #c00;
-}
-.ge {
-  font-style: italic;
-}
-.gr {
-  color: #f00;
-}
-.gh {
-  color: #030;
-}
-.gi {
-  background-color: #cfc;
-  border: 1px solid #0c0;
-}
-.go {
-  color: #aaa;
-}
-.gp {
-  color: #009;
-}
-.gu {
-  color: #030;
-}
-.gt {
-  color: #9c6;
-}
-
-.kt {
-  color: #078;
-}
-.m {
-  color: #f60;
-}
-.s {
-  color: #d44950;
-}
-.na {
-  color: #4f9fcf;
-}
-.nb {
-  color: #366;
-}
-.nc {
-  color: #0a8;
-}
-.no {
-  color: #360;
-}
-.nd {
-  color: #99f;
-}
-.ni {
-  color: #999;
-}
-.ne {
-  color: #c00;
-}
-.nf {
-  color: #c0f;
-}
-.nl {
-  color: #99f;
-}
-.nn {
-  color: #12b4dd;
-}
-.nt {
-  color: #2f6f9f;
-}
-.nv {
-  color: #033;
-}
-.ow {
-  color: #000;
-}
-.w {
-  color: #bbb;
-}
-.mf {
-  color: #f60;
-}
-.mh {
-  color: #f60;
-}
-.mi {
-  color: #f60;
-}
-.sb {
-  color: #c30;
-}
-.sc {
-  color: #c30;
-}
-.sd {
-  color: #c30;
-  font-style: italic;
-}
-.s2 {
-  color: #c30;
-}
-.se {
-  color: #c30;
-}
-.sh {
-  color: #c30;
-}
-.si {
-  color: #a00;
-}
-.sx {
-  color: #c30;
-}
-.s1 {
-  color: #c30;
-}
-.ss {
-  color: #fc3;
-}
-.bp {
-  color: #366;
-}
-.vc {
-  color: #033;
-}
-.vg {
-  color: #033;
-}
-.vi {
-  color: #033;
-}
-.il {
-  color: #f60;
-}
+.c { color: #93a1a1 }
+.err { color: #586e75 }
+.g { color: #586e75 }
+.k { color: #859900 }
+.l { color: #586e75 }
+.n { color: #586e75 }
+.o { color: #859900 }
+.x { color: #cb4b16 }
+.p { color: #586e75 }
+.cm { color: #93a1a1 }
+.cp { color: #859900 }
+.c1 { color: #93a1a1 }
+.cs { color: #859900 }
+.gd { color: #2aa198 }
+.ge { color: #586e75; font-style: italic }
+.gr { color: #dc322f }
+.gh { color: #cb4b16 }
+.gi { color: #859900 }
+.go { color: #586e75 }
+.gp { color: #586e75 }
+.gs { color: #586e75; font-weight: bold }
+.gu { color: #cb4b16 }
+.gt { color: #586e75 }
+.kc { color: #cb4b16 }
+.kd { color: #268bd2 }
+.kn { color: #859900 }
+.kp { color: #859900 }
+.kr { color: #268bd2 }
+.kt { color: #dc322f }
+.ld { color: #586e75 }
+.m { color: #2aa198 }
+.s { color: #2aa198 }
+.na { color: #586e75 }
+.nb { color: #B58900 }
+.nc { color: #268bd2 }
+.no { color: #cb4b16 }
+.nd { color: #268bd2 }
+.ni { color: #cb4b16 }
+.ne { color: #cb4b16 }
+.nf { color: #268bd2 }
+.nl { color: #586e75 }
+.nn { color: #586e75 }
+.nx { color: #586e75 }
+.py { color: #586e75 }
+.nt { color: #268bd2 }
+.nv { color: #268bd2 }
+.ow { color: #859900 }
+.w { color: #586e75 }
+.mf { color: #2aa198 }
+.mh { color: #2aa198 }
+.mi { color: #2aa198 }
+.mo { color: #2aa198 }
+.sb { color: #93a1a1 }
+.sc { color: #2aa198 }
+.sd { color: #586e75 }
+.s2 { color: #2aa198 }
+.se { color: #cb4b16 }
+.sh { color: #586e75 }
+.si { color: #2aa198 }
+.sx { color: #2aa198 }
+.sr { color: #dc322f }
+.s1 { color: #2aa198 }
+.ss { color: #2aa198 }
+.bp { color: #268bd2 }
+.vc { color: #268bd2 }
+.vg { color: #268bd2 }
+.vi { color: #268bd2 }
+.il { color: #2aa198 }
+.c2::before, .pl-c2::before { content: "^M" }

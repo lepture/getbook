@@ -51,14 +51,13 @@ def parse_book_from_json(json_file):
         book.chapters = _format_chapters(chapters)
         return book
 
-    for i, s in enumerate(secs):
+    for s in secs:
         section = Section(
-            uid='s-{}'.format(i),
             title=s['title'],
             subtitle=s.get('subtitle')
         )
         section.chapters = _format_chapters(s.get('chapters', []))
-        book.sections.append(section)
+        book.add_section(section)
 
     return book
 
@@ -73,6 +72,8 @@ def main():
     parser.add_argument('-f', '--file', help='create book via JSON file')
     parser.add_argument('-u', '--url', help='create book via URL')
     parser.add_argument('-c', '--cover', help='add book cover URL')
+    parser.add_argument('--force', help='force fetching from network',
+                        action='store_true')
     args = parser.parse_args()
 
     if args.version:
@@ -90,12 +91,12 @@ def main():
         else:
             if args.cover:
                 book.cover = args.cover
-            bg.build(book)
+            bg.build(book, force=args.force)
     elif args.file:
         book = parse_book_from_json(args.file)
         if args.cover:
             book.cover = args.cover
-        bg.build(book)
+        bg.build(book, force=args.force)
     else:
         print('Please specify a file or URL')
 

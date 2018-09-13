@@ -28,8 +28,8 @@ class Chapter(_Chapter):
 
 
 class Section(object):
-    def __init__(self, uid, title, subtitle=None):
-        self.uid = uid
+    def __init__(self, title, subtitle=None):
+        self.uid = None
         self.title = title
         self.subtitle = subtitle
         self.chapters = []
@@ -53,3 +53,7 @@ class Book(object):
         self.sections = []
         self.chapters = []
         self.images = set()
+
+    def add_section(self, section):
+        section.uid = 's-{}'.format(len(self.sections) + 1)
+        self.sections.append(section)
