@@ -29,7 +29,6 @@ class Readable(object):
             Parser = get_parser_by_html(self.html) or FallbackParser
             self._parser = Parser(self.url, self.html)
 
-            log.debug('Parser: {}'.format(self._parser.NAME))
             return self._parser
 
         p = FallbackParser(self.url)
@@ -44,11 +43,12 @@ class Readable(object):
         else:
             self._parser = p
 
-        log.debug('Parser: {}'.format(self._parser.NAME))
         return self._parser
 
     def parse(self, expand=False):
-        chapter = self.get_parser().parse()
+        parser = self.get_parser()
+        log.debug('Parser: {}'.format(parser.NAME))
+        chapter = parser.parse()
         if expand and isinstance(chapter, Chapter):
             chapter = self.expand(chapter)
         return chapter

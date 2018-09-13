@@ -5,6 +5,7 @@ from collections import defaultdict
 from .github import GistParser, GithubIssueParser, GithubBlobParser
 from .kanunu import KanunuParser
 from .feed import FeedParser
+from .dajia import DajiaParser
 
 __all__ = ['get_parser_by_url', 'get_parser_by_html']
 
@@ -31,6 +32,7 @@ register(GithubIssueParser)
 register(GithubBlobParser)
 register(KanunuParser)
 register(FeedParser)
+register(DajiaParser)
 
 
 def get_parser_by_url(url):

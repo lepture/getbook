@@ -3,7 +3,7 @@ import json
 import logging
 import datetime
 from .core import Book
-from .core.utils import sha1name
+from .core.utils import sha1name, to_datetime
 from .parser import Readable
 from .ebook import BookBuilder
 from .ebook.processor import update_chapter_image
@@ -112,3 +112,23 @@ class JSONEncoder(json.JSONEncoder):
         if isinstance(o, datetime.datetime):
             return o.isoformat()
         return json.JSONEncoder.default(self, o)
+
+
+def filter_book_chapters(book, start=None, end=None):
+
+    def _filter_chapter(chapter):
+        pubdate = chapter.get('pubdate')
+        if not pubdate:
+            return True
+
+        pubdate = to_datetime(pubdate)
+        if start and pubdate <= start:
+            return False
+        if end and pubdate > end:
+            return False
+        return True
+
+    book.chapters = [c for c in book.chapters if _filter_chapter(c)]
+    for s in book.sections:
+        s.chapters = [c for c in s.chapters if _filter_chapter(c)]
+    return book

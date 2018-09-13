@@ -4,7 +4,7 @@ import re
 import time
 import hashlib
 import dateutil.parser
-from datetime import datetime
+from datetime import datetime, date
 from urllib.parse import urlparse
 
 USELESS_TEXT = re.compile(r'[\d|<>()\[\]\-：:【】●]')
@@ -108,6 +108,16 @@ def sha1name(name):
     if not isinstance(name, bytes):
         name = name.encode('utf-8')
     return hashlib.sha1(name).hexdigest()
+
+
+def format_date(value, format='%Y-%m-%d'):
+    if isinstance(value, (datetime, date)):
+        return value.strftime(format=format)
+
+    rv = dateutil.parser.parse(value)
+    if rv:
+        return rv.strftime(format=format)
+    return ''
 
 
 def _is_valid_ident(ident):

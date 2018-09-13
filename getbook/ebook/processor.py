@@ -6,9 +6,9 @@ from PIL import Image
 from bs4 import BeautifulSoup
 from .cover import Cover
 from .images import fetch_thumbnail, get_or_download_image
-from ._jinja import format_date
 from ..core import LXML_SPACE
 from ..core import Image as ImageModel
+from ..core.utils import format_date
 
 log = logging.getLogger(__name__)
 

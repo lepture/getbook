@@ -1,7 +1,6 @@
 import os
-import datetime
-import dateutil
 from jinja2 import Environment, FileSystemLoader
+from ..core.utils import format_date
 
 _CWD = os.path.dirname(os.path.abspath(__file__))
 
@@ -23,13 +22,3 @@ def create_jinja():
         'date': format_date,
     })
     return jinja
-
-
-def format_date(value, format='%Y-%m-%d'):
-    if isinstance(value, (datetime.datetime, datetime.date)):
-        return value.strftime(format=format)
-
-    rv = dateutil.parser.parse(value)
-    if rv:
-        return rv.strftime(format=format)
-    return ''

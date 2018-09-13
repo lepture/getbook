@@ -6,11 +6,10 @@
     <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
   </head>
   <body>
-    <div class="sec-section">
-      <br/><br/><br/>
-      <h1 class="title">{{ section.title }}</h1>
+    <div class="cover">
+      <h1 class="cover-title">{{ section.title }}</h1>
       {% if section.subtitle %}
-      <h2 class="title">{{ section.subtitle }}</h2>
+      <div class="cover-meta">{{ section.subtitle }}</div>
       {% endif %}
     </div>
   </body>

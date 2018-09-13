@@ -1,9 +1,11 @@
 import os
+import sys
 import logging
 import json
+import datetime
 from . import __version__ as version
 from .core import Book, Section
-from .gen import BookGen
+from .gen import BookGen, filter_book_chapters
 
 
 def config_logging(verbose=False):
@@ -28,7 +30,7 @@ def load_config():
             return json.load(f)
 
 
-def parse_book_from_json(json_file):
+def parse_book_from_json(json_file, book_gen=None):
     with open(json_file) as f:
         data = json.load(f)
 
@@ -52,12 +54,27 @@ def parse_book_from_json(json_file):
         return book
 
     for s in secs:
-        section = Section(
-            title=s['title'],
-            subtitle=s.get('subtitle')
-        )
-        section.chapters = _format_chapters(s.get('chapters', []))
-        book.add_section(section)
+        if not isinstance(s, dict) and book_gen and s.startswith('http'):
+            b = book_gen.parse(s, True)
+            if isinstance(b, Book):
+                subtitle = ''
+                if b.author != 'Doocer':
+                    subtitle = b.author
+                section = Section(
+                    title=b.title,
+                    subtitle=subtitle,
+                )
+                section.chapters = b.chapters
+                book.add_section(section)
+            else:
+                print('Invalid section source: {}'.format(s))
+        else:
+            section = Section(
+                title=s['title'],
+                subtitle=s.get('subtitle')
+            )
+            section.chapters = _format_chapters(s.get('chapters', []))
+            book.add_section(section)
 
     return book
 
@@ -74,31 +91,39 @@ def main():
     parser.add_argument('-c', '--cover', help='add book cover URL')
     parser.add_argument('--force', help='force fetching from network',
                         action='store_true')
+    parser.add_argument('--days', help='only fetch chapters in days', type=int)
     args = parser.parse_args()
 
     if args.version:
         print('getbook v{}'.format(version))
         return
 
+    if not args.url and not args.file:
+        print('Please specify a file or URL')
+        sys.exit(1)
+
     config_logging(args.verbose)
     config = load_config()
     # TODO: kindlegen
     bg = BookGen(config=config, kindlegen='kindlegen')
+
     if args.url:
         book = bg.parse(args.url, True)
-        if not isinstance(book, Book):
-            print('Invalid book URL')
-        else:
-            if args.cover:
-                book.cover = args.cover
-            bg.build(book, force=args.force)
-    elif args.file:
-        book = parse_book_from_json(args.file)
-        if args.cover:
-            book.cover = args.cover
-        bg.build(book, force=args.force)
     else:
-        print('Please specify a file or URL')
+        book = parse_book_from_json(args.file, bg)
+
+    if not isinstance(book, Book):
+        print('Invalid book URL')
+        sys.exit(1)
+
+    if args.cover:
+        book.cover = args.cover
+
+    if args.days:
+        now = datetime.datetime.utcnow()
+        start = now - datetime.timedelta(days=args.days)
+        filter_book_chapters(book, start)
+    bg.build(book, force=args.force)
 
 
 if __name__ == '__main__':

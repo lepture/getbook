@@ -10,6 +10,9 @@
   <h1>Contents</h1>
   <nav epub:type="toc">
     <ol>
+      {% for item in book.chapters %}
+        <li><a href="{{ item.uid }}.xhtml">{{ item.title }}</a></li>
+      {% endfor %}
       {% for sec in book.sections %}
         <li>
           <a href="{{ sec.uid }}.xhtml">{{ sec.title }}</a>
@@ -19,9 +22,6 @@
             {% endfor %}
           </ol>
         </li>
-      {% endfor %}
-      {% for item in book.chapters %}
-        <li><a href="{{ item.uid }}.xhtml">{{ item.title }}</a></li>
       {% endfor %}
     </ol>
   </nav>

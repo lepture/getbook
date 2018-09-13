@@ -54,8 +54,19 @@ def _parse_item(item):
         href = el.get_text()
     if href:
         href = href.strip()
+
     data = dict(
         title=title,
         url=href,
     )
+    el = item.find('pubdate')
+    if not el:
+        el = item.find('updated')
+    if not el:
+        el = item.find('published')
+
+    if el:
+        pubdate = el.get_text()
+        if pubdate:
+            data['pubdate'] = pubdate
     return data

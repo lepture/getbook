@@ -1,0 +1,8 @@
+{
+  "uid": "feeds",
+  "title": "Feeds Collection",
+  "sections": [
+    "http://feeds.doocer.com/one/article",
+    "http://dajia.qq.com/tanzi_diceng.htm#!/301"
+  ]
+}
