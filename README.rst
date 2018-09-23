@@ -1,14 +1,17 @@
-# Getbook
+Getbook
+=======
 
 Generate ebooks to EPUB and MOBI from a collection of web links.
 
-## Installation
+Installation
+------------
 
 Install with pip::
 
     $ pip install getbook
 
-## Guide
+Guide
+-----
 
 There are serval ways to generate books.
 
