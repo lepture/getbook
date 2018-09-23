@@ -42,7 +42,7 @@ class Cover(object):
     def draw_top_text(self, suffix):
         text = self.COPYRIGHT_TEXT + ' / ' + suffix
         font_file = self.config['EBOOK_ENG_REGULAR_FONT']
-        font = ImageFont.truetype(font_file, 20)
+        font = truetype(font_file, 20)
         self.draw.text((32, 20), text, WHITE, font)
 
     def draw_title_text(self, title):
@@ -69,7 +69,7 @@ class Cover(object):
     def draw_issue_count(self, number):
         text = str(number)
         font_file = self.config['EBOOK_ENG_BOLD_FONT']
-        font = ImageFont.truetype(font_file, 80)
+        font = truetype(font_file, 80)
         w, _ = self.draw.textsize(text, font=font)
         self.draw.text((self.WIDTH - 48 - w, 36), text, WHITE, font)
 
@@ -118,7 +118,7 @@ class Cover(object):
             font_size = int(font_size * 1.8)
         else:
             font_file = cjk_bold_font
-        return ImageFont.truetype(font_file, font_size)
+        return truetype(font_file, font_size)
 
     def _draw_half_title(self, title, count, wrap):
         lines = textwrap.wrap(title, wrap)
@@ -150,7 +150,7 @@ class Cover(object):
             font_size = int(font_size * 2)
         else:
             font_file = self.config['EBOOK_CJK_REGULAR_FONT']
-        return ImageFont.truetype(font_file, font_size)
+        return truetype(font_file, font_size)
 
     def _draw_top_bottom_text(self, text):
         y = self.HEIGHT - 110
@@ -171,3 +171,9 @@ class Cover(object):
         font = self._get_regular_font(text, 120)
         self.draw.text((x, y + 32), text, WHITE, font)
         return True
+
+
+def truetype(font_file, font_size):
+    if isinstance(font_file, tuple):
+        return ImageFont.truetype(font_file[0], font_size, font_file[1])
+    return ImageFont.truetype(font_file, font_size)

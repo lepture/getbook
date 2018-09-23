@@ -23,11 +23,20 @@ def config_logging(verbose=False):
 
 
 def load_config():
+    config = {}
+    if sys.platform == 'darwin':
+        config = {
+            "EBOOK_ENG_REGULAR_FONT": "Avenir.ttc",
+            "EBOOK_ENG_BOLD_FONT": ("Avenir.ttc", 2),
+            "EBOOK_CJK_REGULAR_FONT": ("PingFang.ttc", 2),
+            "EBOOK_CJK_BOLD_FONT": ("PingFang.ttc", 8)
+        }
     home_dir = os.path.expanduser('~')
     conf = os.path.join(home_dir, '.getbook/config.json')
     if os.path.isfile(conf):
         with open(conf) as f:
-            return json.load(f)
+            config.update(json.load(f))
+    return config
 
 
 def parse_book_from_json(json_file, book_gen=None):
