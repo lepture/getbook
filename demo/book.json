@@ -1,0 +1,12 @@
+{
+  "uid": "book",
+  "title": "Hello World",
+  "author": "Armin",
+  "chapters": [
+    "http://lucumr.pocoo.org/2018/7/13/python/",
+    "http://lucumr.pocoo.org/2017/6/5/diversity-in-technology",
+    "http://lucumr.pocoo.org/2016/5/18/for-our-children",
+    "http://lucumr.pocoo.org/2016/3/24/open-source-trust-scaling"
+  ]
+}
+

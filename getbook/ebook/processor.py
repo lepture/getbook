@@ -125,6 +125,9 @@ def _is_valid_image(filepath):
 
 
 def create_book_cover(config, book, src, image_dir):
+    if not src:
+        return None
+
     cover_file = get_or_download_image(src, image_dir)
     ext = cover_file.split('.')[-1]
     if ext not in ['jpg', 'jpeg', 'png']:

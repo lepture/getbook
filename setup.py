@@ -34,6 +34,11 @@ setup(
         'getbook.sites',
         'getbook.ebook',
     ],
+    entry_points={
+        'console_scripts': [
+            'getbook = getbook.cli:main'
+        ],
+    },
     description='Generate e-books in EPUB or MOBI from websites',
     zip_safe=False,
     include_package_data=True,
