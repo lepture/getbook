@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ book.lang }}" lang="{{ book.lang }}">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+</head>
+<body>
+<div class="preface">
+  <h1 class="preface-title">前言</h1>
+  <div class="preface-content">
+    <p><strong>{{ book.title }}</strong> 由 {{config.GENERATOR_NAME}} 生成。</p>
+    <p>本書包含 {% if book.sections %}{{ book.sections|count }} 章、{% endif %} {{ book|chapter_count }} 篇內容。</p>
+    <hr/>
+    <div class="preface-bottom">
+      <p><a href="{{ config.GENERATOR_URL }}">{{ config.GENERATOR_NAME }}</a> 是一個從網頁生成電子書的工具，你可以訪問 <strong>{{ config.GENERATOR_URL }}</strong> 獲取更多信息。</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -7,8 +7,8 @@
     <dc:creator opf:role="aut">{{ book.author }}</dc:creator>
     <dc:date>{{ book.pubdate|date('%Y-%m-%dT%H:%M:%SZ') }}</dc:date>
     <dc:subject>Book</dc:subject>
-    <dc:description>A book created by {{ book.author }} via doocer.</dc:description>
-    <dc:publisher>doocer.com</dc:publisher>
+    <dc:description>A book created by {{ book.author }} via {{ config.GENERATOR_NAME }}.</dc:description>
+    <dc:publisher>{{ config.GENERATOR_NAME }}</dc:publisher>
   </metadata>
   <manifest>
     {% if book.cover %}

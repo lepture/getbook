@@ -3,9 +3,8 @@
 
 
 from setuptools import setup
-
-version = '0.1'
-homepage = 'https://doocer.com/'
+from getbook import __version__ as version
+from getbook import __homepage__ as homepage
 
 
 def fread(filename):
@@ -35,14 +34,13 @@ setup(
         'getbook.sites',
         'getbook.ebook',
     ],
-    description='TODO',
+    description='Generate e-books in EPUB or MOBI from websites',
     zip_safe=False,
     include_package_data=True,
     platforms='any',
     long_description=fread('README.rst'),
     license='GNU AGPLv3+',
     install_requires=install_requirements,
-    project_urls={},
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',

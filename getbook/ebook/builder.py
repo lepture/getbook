@@ -9,6 +9,7 @@ from collections import Counter
 from subprocess import Popen, PIPE
 from .processor import replace_content_images, create_book_cover
 from ._jinja import create_jinja
+from .. import __homepage__ as homepage
 
 log = logging.getLogger(__name__)
 
@@ -24,6 +25,9 @@ class BookBuilder(object):
     _jinja = create_jinja()
 
     def __init__(self, book, cache_dir, config, kindlegen=None):
+        config.setdefault('GENERATOR_NAME', 'getbook')
+        config.setdefault('GENERATOR_URL', homepage)
+
         self.book = book
         self.config = config
         self.kindlegen = kindlegen
@@ -67,9 +71,13 @@ class BookBuilder(object):
 
     def write_meta(self, book):
         self.write_template('cover.html', {'book': book}, 'cover.xhtml')
+        if book.lang == 'zh':
+            tpl = 'book.preface.zh.html'
+        else:
+            tpl = 'book.preface.en.html'
         self.write_template(
-            'book.preface.en.html',
-            {'book': book},
+            tpl,
+            {'book': book, 'config': self.config},
             'preface.xhtml'
         )
 
@@ -102,7 +110,11 @@ class BookBuilder(object):
         return _create_cover(self._get_unsplash_cover())
 
     def write_opf(self, book):
-        self.write_template('book.opf.xml', {'book': book}, 'package.opf')
+        self.write_template(
+            'book.opf.xml',
+            {'book': book, 'config': self.config},
+            'package.opf'
+        )
 
     def create_mobi(self, output):
         opf_file = os.path.join(self.book_dir, 'package.opf')
@@ -191,7 +203,6 @@ class BookBuilder(object):
         return data['urls']['full']
 
     def _write(self, content, dest):
-        """Write given content to the destination."""
         if not isinstance(content, bytes):
             content = content.encode('utf-8')
 

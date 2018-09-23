@@ -20,5 +20,16 @@ def create_jinja():
     )
     jinja.filters.update({
         'date': format_date,
+        'chapter_count': chapter_count,
     })
     return jinja
+
+
+def chapter_count(book):
+    if not book.sections:
+        return len(book.chapters)
+
+    count = 0
+    for s in book.sections:
+        count += len(s.chapters)
+    return count
