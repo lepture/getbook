@@ -14,6 +14,7 @@ log = logging.getLogger(__name__)
 
 
 def replace_content_images(data, image_dir):
+    referrer = data['url']
     content = '<div>{}</div>'.format(data['content'])
     dom = BeautifulSoup(content, LXML_SPACE)
 
@@ -24,7 +25,7 @@ def replace_content_images(data, image_dir):
             del tag.attrs['data-attrs']
             continue
 
-        image = generate_thumbnail_image(src.strip(), image_dir)
+        image = generate_thumbnail_image(src, image_dir, referrer)
         if not image:
             del tag.attrs['data-attrs']
             continue
@@ -39,9 +40,9 @@ def replace_content_images(data, image_dir):
     data['content'] = content
 
 
-def generate_thumbnail_image(src, image_dir):
+def generate_thumbnail_image(src, image_dir, referrer):
     log.debug('Fetching: {}'.format(src))
-    filepath = fetch_thumbnail(src.strip(), image_dir)
+    filepath = fetch_thumbnail(src.strip(), image_dir, referrer)
     if not filepath:
         return
     href = os.path.basename(filepath)

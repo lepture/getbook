@@ -16,13 +16,13 @@ IMAGE_EXTENSIONS = ['jpeg', 'png', 'gif', 'svg']
 LIMIT_EXTENSIONS = ['.jpeg', '.png', '.jpg']
 
 
-def fetch_thumbnail(src, image_dir):
+def fetch_thumbnail(src, image_dir, referrer=None):
     name = hashlib.sha1(src.encode('utf-8')).hexdigest()
     dest = _find_in_cache(name, None, image_dir)
     if dest:
         return dest
 
-    filepath = get_or_download_image(src, image_dir)
+    filepath = get_or_download_image(src, image_dir, referrer)
     if not filepath:
         return None
 
@@ -44,7 +44,7 @@ def fetch_thumbnail(src, image_dir):
     return dest
 
 
-def get_or_download_image(src, image_dir):
+def get_or_download_image(src, image_dir, referrer=None):
     name = hashlib.sha1(src.encode('utf-8')).hexdigest()
     d = urlparse(src)
     ct = mimetypes.guess_type(d.path)[0]
@@ -54,7 +54,11 @@ def get_or_download_image(src, image_dir):
         return dest
 
     try:
-        req = requests.get(src, timeout=15, stream=True)
+        if referrer:
+            headers = {'Referer': referrer}
+        else:
+            headers = None
+        req = requests.get(src, timeout=15, stream=True, headers=headers)
     except Exception as e:
         log.exception(e)
         return None
