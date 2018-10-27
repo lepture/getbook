@@ -7,6 +7,7 @@ from .kanunu import KanunuParser
 from .feed import FeedParser
 from .dajia import DajiaParser
 from .piaotian import PiaotianParser
+from .qbxs5 import Qbxs5Parser
 
 __all__ = ['get_parser_by_url', 'get_parser_by_html']
 
@@ -35,6 +36,7 @@ register(KanunuParser)
 register(FeedParser)
 register(DajiaParser)
 register(PiaotianParser)
+register(Qbxs5Parser)
 
 
 def get_parser_by_url(url):
