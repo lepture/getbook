@@ -19,6 +19,7 @@ install_requirements = [
     'Pillow',
     'python-dateutil',
     'requests',
+    'html5lib',
 ]
 
 

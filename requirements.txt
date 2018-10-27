@@ -1,6 +1,7 @@
 beautifulsoup4==4.6.3
 certifi==2018.8.24
 chardet==3.0.4
+html5lib==1.0.1
 idna==2.7
 Jinja2==2.10
 lxml==4.2.5
