@@ -69,8 +69,7 @@ class BookBuilder(object):
     def write_toc(self, book):
         self.write_template('toc.html', {'book': book}, 'toc.xhtml')
 
-    def write_meta(self, book):
-        self.write_template('cover.html', {'book': book}, 'cover.xhtml')
+    def write_preface(self, book):
         if book.lang == 'zh':
             tpl = 'book.preface.zh.html'
         else:
@@ -87,6 +86,12 @@ class BookBuilder(object):
         self._write(style, 'stylesheet.css')
 
     def write_cover(self, book):
+        self.write_template(
+            'cover.html',
+            {'book': book, 'config': self.config},
+            'cover.xhtml'
+        )
+
         if not self.config:
             book.cover = None
             return False
@@ -149,7 +154,7 @@ class BookBuilder(object):
             self.write_section(sec)
 
         self.write_toc(book)
-        self.write_meta(book)
+        self.write_preface(book)
         self.write_opf(book)
 
         if not os.path.isdir(output):
