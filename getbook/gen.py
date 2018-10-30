@@ -12,11 +12,10 @@ log = logging.getLogger(__name__)
 
 
 class BookGen(object):
-    def __init__(self, config, kindlegen=None, cache_dir=None):
+    def __init__(self, config, cache_dir=None):
         if cache_dir is None:
             cache_dir = os.path.join(os.path.expanduser('~'), '.getbook/1')
         self.config = config
-        self.kindlegen = kindlegen
         self.cache_dir = cache_dir
         self._ensure_folders(['data', 'book', 'img'])
 
@@ -38,17 +37,19 @@ class BookGen(object):
             return self._parse_from_cache(url, filepath)
         return self._parse_from_network(url, filepath)
 
-    def build(self, book, output=None, force=False):
+    def build(self, book, output=None, force=False, epub=True, mobi=True):
         if output is None:
             output = os.getcwd()
 
         builder = BookBuilder(
             book, self.cache_dir,
             config=self.config,
-            kindlegen=self.kindlegen,
         )
         self._write_chapter(book, force=force, builder=builder)
-        builder.build(output)
+        # generate at least one format ebook
+        if not epub and not mobi:
+            epub = True
+        builder.build(output, epub=epub, mobi=mobi)
 
     def _parse_from_cache(self, url, filepath):
         with open(filepath, 'r') as f:

@@ -24,13 +24,12 @@ STYLE_WHITE_SPACE = re.compile(r'\n+\s*')
 class BookBuilder(object):
     _jinja = create_jinja()
 
-    def __init__(self, book, cache_dir, config, kindlegen=None):
+    def __init__(self, book, cache_dir, config):
         config.setdefault('GENERATOR_NAME', 'getbook')
         config.setdefault('GENERATOR_URL', homepage)
 
         self.book = book
         self.config = config
-        self.kindlegen = kindlegen
         self.cache_dir = cache_dir
         self.book_dir = os.path.join(cache_dir, 'book', book.uid)
 
@@ -46,18 +45,13 @@ class BookBuilder(object):
         self._write(content, dest)
 
     def write_chapter(self, chapter):
-        image_dir = os.path.join(self.cache_dir, 'img')
-        for img in replace_content_images(chapter, image_dir):
-            self.book.images.add(img)
-            dest = os.path.join(self.book_dir, img.href)
-            shutil.copy(img.filepath, dest)
-
+        self._prepare_chapter_images(chapter)
         self.write_template(
             'chapter.html',
             {'chapter': chapter},
             '{}.xhtml'.format(chapter['uid'])
         )
-        self._process_chapter(chapter)
+        self._post_process_chapter(chapter)
 
     def write_section(self, section):
         self.write_template(
@@ -122,8 +116,15 @@ class BookBuilder(object):
         )
 
     def create_mobi(self, output):
+        kindlegen = self.config.get('GENERATOR_KINDLEGEN')
+        if not kindlegen:
+            log.warn('kindlgen is not configured')
+            return
+
+        log.info('MOBI: {}'.format(output))
+        self.write_stylesheet('reset', 'layout', 'mobi')
         opf_file = os.path.join(self.book_dir, 'package.opf')
-        cmd = [self.kindlegen, '-dont_append_source', opf_file]
+        cmd = [kindlegen, '-dont_append_source', opf_file]
         p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         stdout, stderr = p.communicate()
 
@@ -134,6 +135,9 @@ class BookBuilder(object):
         shutil.move(mobi_file, output)
 
     def create_epub(self, output):
+        log.info('EPUB: {}'.format(output))
+
+        self.write_stylesheet('reset', 'layout', 'highlight', 'epub')
         with zipfile.ZipFile(output, 'w') as z:
             z.writestr('META-INF/container.xml', EPUB_CONTAINER)
             z.writestr('mimetype', EPUB_MIME_TYPE)
@@ -162,14 +166,10 @@ class BookBuilder(object):
 
         if epub:
             dest = os.path.join(output, book.uid + '.epub')
-            self.write_stylesheet('reset', 'layout', 'highlight', 'epub')
-            log.info('EPUB: {}'.format(dest))
             self.create_epub(dest)
 
-        if mobi and self.kindlegen:
+        if mobi:
             dest = os.path.join(output, book.uid + '.mobi')
-            self.write_stylesheet('reset', 'layout', 'mobi')
-            log.info('MOBI: {}'.format(dest))
             self.create_mobi(dest)
         # self.cleanup()
 
@@ -183,7 +183,14 @@ class BookBuilder(object):
         book.lang = lang
         return book
 
-    def _process_chapter(self, chapter):
+    def _prepare_chapter_images(self, chapter):
+        image_dir = os.path.join(self.cache_dir, 'img')
+        for img in replace_content_images(chapter, image_dir):
+            self.book.images.add(img)
+            dest = os.path.join(self.book_dir, img.href)
+            shutil.copy(img.filepath, dest)
+
+    def _post_process_chapter(self, chapter):
         lang = chapter.get('lang')
         if lang != 'en':
             self._lang_counter[lang] += 1

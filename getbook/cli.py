@@ -101,6 +101,10 @@ def main():
     parser.add_argument('--force', help='force fetching from network',
                         action='store_true')
     parser.add_argument('--days', help='only fetch chapters in days', type=int)
+    parser.add_argument('--epub', help='generate EPUB format ebook',
+                        action='store_true')
+    parser.add_argument('--mobi', help='generate MOBI format ebook',
+                        action='store_true')
     args = parser.parse_args()
 
     if args.version:
@@ -114,7 +118,8 @@ def main():
     config_logging(args.verbose)
     config = load_config()
     # TODO: kindlegen
-    bg = BookGen(config=config, kindlegen='kindlegen')
+    config['GENERATOR_KINDLEGEN'] = 'kindlegen'
+    bg = BookGen(config=config)
 
     if args.url:
         book = bg.parse(args.url, True)
@@ -132,7 +137,7 @@ def main():
         now = datetime.datetime.utcnow()
         start = now - datetime.timedelta(days=args.days)
         filter_book_chapters(book, start)
-    bg.build(book, force=args.force)
+    bg.build(book, force=args.force, epub=args.epub, mobi=args.mobi)
 
 
 if __name__ == '__main__':
