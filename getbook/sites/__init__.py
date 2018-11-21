@@ -1,13 +1,10 @@
 # coding: utf-8
 
+import pkg_resources
 from urllib.parse import urlparse
 from collections import defaultdict
 from .github import GistParser, GithubIssueParser, GithubBlobParser
-from .kanunu import KanunuParser
 from .feed import FeedParser
-from .dajia import DajiaParser
-from .piaotian import PiaotianParser
-from .qbxs5 import Qbxs5Parser
 
 __all__ = ['get_parser_by_url', 'get_parser_by_html']
 
@@ -32,11 +29,10 @@ def register(Parser):
 register(GistParser)
 register(GithubIssueParser)
 register(GithubBlobParser)
-register(KanunuParser)
 register(FeedParser)
-register(DajiaParser)
-register(PiaotianParser)
-register(Qbxs5Parser)
+
+for pkg in pkg_resources.iter_entry_points('getbook.parsers'):
+    register(pkg.load())
 
 
 def get_parser_by_url(url):
