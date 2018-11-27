@@ -124,6 +124,9 @@ class Parser(object):
         if self.content is None:
             self.fetch()
 
+    def clean_content(self, content):
+        return content
+
     def parse(self):
         self.before_parse()
 
@@ -153,6 +156,7 @@ class Parser(object):
         content, attachments = parse_content_and_attachments(
             content_node, self.dom
         )
+        content = self.clean_content(content)
 
         if not summary and content_node:
             summary = content_node.get_text()
