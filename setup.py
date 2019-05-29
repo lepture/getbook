@@ -7,9 +7,8 @@ from getbook import __version__ as version
 from getbook import __homepage__ as homepage
 
 
-def fread(filename):
-    with open(filename) as f:
-        return f.read()
+with open('README.rst', 'r') as f:
+    readme = f.read()
 
 
 install_requirements = [
@@ -44,7 +43,7 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    long_description=fread('README.rst'),
+    long_description=readme,
     license='GNU AGPLv3+',
     install_requires=install_requirements,
     classifiers=[
