@@ -18,6 +18,7 @@ venv/
 .pytest_cache/
 *.egg
 .idea/
+.vscode
 
 *.mobi
 *.epub

@@ -44,7 +44,10 @@ ignored_symbols = (
     'instapaper_ignore',
     'languages',
     'toc',
+    'ui_qtext_truncated',
+    'ui_qtext_truncated_text',
 )
+
 ignored_prefix_symbols = (
     'ad-',
     'ad_',
