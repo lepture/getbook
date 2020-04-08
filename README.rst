@@ -41,9 +41,13 @@ There are serval ways to generate books.
 
     $ getbook -f ./book.json
 
-Use ``--format=mobi`` to generate mobi file for kindle::
+Use ``--mobi`` to generate mobi file for kindle::
 
-    $ getbook -f ./book.json --format=mobi
+    $ getbook -f ./book.json --mobi
+
+Use ``--epub`` to generate epub file::
+
+    $ getbook -f ./book.json --epub
 
 JSON Format
 -----------
